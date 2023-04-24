@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema(
       required: [true, "Password is required"],
       match: [
         /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])(?=.*[a-zA-Z]).{8,}$/,
-      "Password must be at least 8 characters long, Should contain at least one uppercase  letter, one lowercase letter, one number and one special character (e.g. !@#$%^&*()_+-=[]{})."
+      "Password must be at least 8 characters long, Should contain at least one uppercase letter, one lowercase letter, one number and one special character (e.g. !@#$%^&*()_+-=[]{})."
       ],
       select: false,
     },
@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema(
       default: AuthRoles.USER,
     },
     forgotPasswordToken: String,
-    forgotPasswordExpiry: Date  
+    forgotPasswordExpiry: Date
   }, {timeStamps: true}
 )
 
