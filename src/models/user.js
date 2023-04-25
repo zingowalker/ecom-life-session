@@ -1,27 +1,28 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 import AuthRoles from '../utils/authRoles.js';
-
 
 const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Name is required"],
-      maxLength: [50, "Name must be less than 50 chars"],
+      required: [true, 'Name is required'],
+      maxLength: [50, 'Name must be less than 50 chars'],
     },
     email: {
       type: String,
-      required: [true, "Email is required"],
+      required: [true, 'Email is required'],
       match: [
-        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 
-        'Invalid email address format'],
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        'Invalid email address format',
+      ],
     },
     password: {
       type: String,
-      required: [true, "Password is required"],
+      required: [true, 'Password is required'],
       match: [
         /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])(?=.*[a-zA-Z]).{8,}$/,
-      "Password must be at least 8 characters long, Should contain at least one uppercase letter, one lowercase letter, one number and one special character (e.g. !@#$%^&*()_+-=[]{})."
+        'Password must be at least 8 characters long, Should contain at least one uppercase letter, one lowercase letter, one number and one special character (e.g. !@#$%^&*()_+-=[]{}).',
       ],
       select: false,
     },
@@ -31,11 +32,24 @@ const userSchema = new mongoose.Schema(
       default: AuthRoles.USER,
     },
     forgotPasswordToken: String,
-    forgotPasswordExpiry: Date
-  }, {timeStamps: true}
+    forgotPasswordExpiry: Date,
+  },
+  { timeStamps: true }
 )
 
+// Encrypt the password before saving: Hooks
 
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next()
+  this.password = await bcrypt.hash(this.password, 10)
+  next()
+})
 
+userSchema.methods = {
+  // compare password
+  comparePassword: async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password)
+  }
+}
 
-export default mongoose.model("User", "userSchema");
+export default mongoose.model('User', userSchema)
