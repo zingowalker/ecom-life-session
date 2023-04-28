@@ -12,7 +12,7 @@ const collectionSchema = new mongoose.Schema(
       ]
     }
   },
-  {timeStamps: true}
+  {timestamps: true}
 );
 
 export default mongoose.model("Collection", collectionSchema);

@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema(
     forgotPasswordToken: String,
     forgotPasswordExpiry: Date,
   },
-  { timeStamps: true }
+  { timestamps: true }
 )
 
 // Encrypt the password before saving: Hooks

@@ -3,7 +3,7 @@ import app from "./app.js";
 import config from '../src/config/index.js';
 
 
-( async () => {
+(async () => {
   try {
     // database connection 
     await mongoose.connect(config.MONGODB_URL)
