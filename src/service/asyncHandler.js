@@ -1,6 +1,6 @@
 
 
-const asyncHaneler = (func) => async (req, res, next) => {
+const asyncHandler = (func) => async (req, res, next) => {
   try {
     await func(req, res, next)
 
@@ -12,4 +12,4 @@ const asyncHaneler = (func) => async (req, res, next) => {
   }
 }
 
-export default asyncHaneler;
+export default asyncHandler;
