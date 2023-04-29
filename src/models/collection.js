@@ -1,10 +1,10 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 
 const collectionSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Please provide a collection name" ],
+      required: [true, "Please provide a collection name"],
       trim: true,
       maxLength: [
         120,
@@ -12,7 +12,7 @@ const collectionSchema = new mongoose.Schema(
       ]
     }
   },
-  {timestamps: true}
+  { timestamps: true }
 );
 
 export default mongoose.model("Collection", collectionSchema);
